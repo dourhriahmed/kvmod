@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="ASCII"?>
+<pidmLang:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pidmLang="http://www.ensaj.ac.ma/kvmod/pidm/lang/PidmLang">
+  <entities name="Flight">
+    <features xsi:type="pidmLang:Attribute" name="code" type="id" unique="true"/>
+    <features xsi:type="pidmLang:Attribute" name="departureTime" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="departureDate" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="arrivalTime" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="arrivalDate" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="level" type="numeric"/>
+    <features xsi:type="pidmLang:Reference" name="registeredPositions" entity="//@entities.1" cardinality="*"/>
+    <features xsi:type="pidmLang:Reference" name="sitesAccessed" entity="//@entities.2" cardinality="*"/>
+    <features xsi:type="pidmLang:Reference" name="registeredPersons" entity="//@entities.3" cardinality="*"/>
+    <features xsi:type="pidmLang:Reference" name="origin" entity="//@entities.4" cardinality="1"/>
+    <features xsi:type="pidmLang:Reference" name="destination" entity="//@entities.4" cardinality="1"/>
+    <features xsi:type="pidmLang:Reference" name="usedAirCraft" entity="//@entities.5" cardinality="1"/>
+  </entities>
+  <entities name="Passenger">
+    <features xsi:type="pidmLang:Attribute" name="idPassport" type="id" unique="true"/>
+    <features xsi:type="pidmLang:Attribute" name="firstname" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="lastname" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="birthday" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="sex" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="nationality" type="text"/>
+    <features xsi:type="pidmLang:Reference" name="accessedSites" entity="//@entities.2" cardinality="*"/>
+    <features xsi:type="pidmLang:Reference" name="flights" entity="//@entities.6" cardinality="*"/>
+  </entities>
+  <entities name="WebSiteAccess">
+    <features xsi:type="pidmLang:Attribute" name="timeAccess" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="url" type="text"/>
+    <features xsi:type="pidmLang:Reference" name="requestes" entity="//@entities.3" cardinality="1"/>
+  </entities>
+  <entities name="Airport">
+    <features xsi:type="pidmLang:Attribute" name="codeICAO" type="id" unique="true"/>
+    <features xsi:type="pidmLang:Attribute" name="nameAirport" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="city" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="country" type="text"/>
+    <features xsi:type="pidmLang:Reference" name="landedFlights" entity="//@entities.6" cardinality="*"/>
+    <features xsi:type="pidmLang:Reference" name="departedFlights" entity="//@entities.6" cardinality="*"/>
+  </entities>
+  <entities name="Aircraft">
+    <features xsi:type="pidmLang:Attribute" name="registrationNumber" type="id" unique="true"/>
+    <features xsi:type="pidmLang:Attribute" name="modelNumber" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="manufacturer" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="capacity" type="numeric"/>
+    <features xsi:type="pidmLang:Reference" name="supportedFlights" entity="//@entities.6" cardinality="*"/>
+  </entities>
+  <entities name="Localization">
+    <features xsi:type="pidmLang:Attribute" name="timeLocaliz" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="dateLocaliz" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="latitude" type="text"/>
+    <features xsi:type="pidmLang:Attribute" name="longitude" type="text"/>
+    <features xsi:type="pidmLang:Reference" name="inFlight" entity="//@entities.6" cardinality="1"/>
+  </entities>
+
+  <queries name="Q1_aircraftsCapacityWithin">
+    <projections refAlias="//@queries.0/@from/@alias" attribute="//@entities.5/@features.0"/>
+    <projections refAlias="//@queries.0/@from/@alias" attribute="//@entities.5/@features.4"/>
+    <from entity="//@entities.5">
+    </from>
+    <condition xsi:type="pidmLang:Equality" value="?">
+      <selection refAlias="//@queries.0/@from/@alias" attribute="//@entities.5/@features.0"/>
+    </condition>
+  </queries>
+
+
+  <queries name="Q2_airportsGivenCountrySortedByCities">
+    <projections refAlias="//@queries.1/@from/@alias" attribute="//@entities.4/@features.1"/>
+    <projections refAlias="//@queries.1/@from/@alias" attribute="//@entities.4/@features.0"/>
+    <projections refAlias="//@queries.1/@from/@alias" attribute="//@entities.4/@features.2"/>
+    <from entity="//@entities.4">
+    </from>
+    <condition xsi:type="pidmLang:Equality" value="?">
+      <selection refAlias="//@queries.1/@from/@alias" attribute="//@entities.4/@features.3"/>
+    </condition>
+    <orderingAttributes refAlias="//@queries.4/@from/@alias" attribute="//@entities.4/@features.1"/>
+  </queries>
+
+
+  <queries name="Q3_passengersOfGivenFlight">
+    <projections refAlias="//@queries.2/@from/@alias" attribute="//@entities.3/@features.1"/>
+    <projections refAlias="//@queries.2/@from/@alias" attribute="//@entities.3/@features.2"/>
+    <projections refAlias="//@queries.2/@from/@alias" attribute="//@entities.3/@features.0"/>
+    <from entity="//@entities.3">
+    </from>
+    <inclusions refAlias="//@queries.2/@from/@alias" refs="//@entities.3/@features.6">
+      <alias name="FL"/>
+    </inclusions>
+    <condition xsi:type="pidmLang:Equality" value="?">
+      <selection refAlias="//@queries.2/@inclusions.0/@alias" attribute="//@entities.6/@features.0"/>
+    </condition>
+  </queries>
+
+
+  <queries name="Q4_passengersDepartingGivenCountry">
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.4/@features.2"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.4/@features.2"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.0"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.1"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.2"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.3"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.4"/>
+    <projections refAlias="//@queries.3/@from/@alias" attribute="//@entities.3/@features.5"/>
+    <projections refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.6/@features.1"/>
+    <from entity="//@entities.3">
+    </from>
+    <inclusions refAlias="//@queries.3/@from/@alias" refs="//@entities.3/@features.6">
+      <alias name="FL"/>
+    </inclusions>
+    <inclusions refAlias="//@queries.3/@from/@alias" refs="//@entities.3/@features.6 //@entities.6/@features.7">
+      <alias name="Origin"/>
+    </inclusions>
+    <inclusions refAlias="//@queries.3/@from/@alias" refs="//@entities.0/@features.3 //@entities.1/@features.7 //@entities.4/@features.2">
+      <alias name="Destination"/>
+    </inclusions>
+    <condition xsi:type="pidmLang:AndConjunction">
+        <left xsi:type="pidmLang:Equality" value="?1">
+          <selection refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+        </left>
+        <right xsi:type="pidmLang:Equality" value="?2">
+          <selection refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.3"/>
+        </right>
+    </condition>
+    <orderingAttributes refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.2"/>
+    <orderingAttributes refAlias="//@queries.3/@inclusions.1/@alias" attribute="//@entities.6/@features.1"/>
+  </queries>
+
+
+
+
+  <queries name="Query Q5_passengersDepartingGivenPeriod">
+    <projections refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.0"/>
+    <projections refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.1"/>
+    <projections refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.2"/>
+    <projections refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.4"/>
+    <projections refAlias="//@queries.4/@inclusions.0/@alias" attribute="//@entities.3/@features.0"/>
+    <projections refAlias="//@queries.4/@inclusions.0/@alias" attribute="//@entities.3/@features.2"/>
+    <from entity="//@entities.1">
+    </from>
+    <inclusions refAlias="//@queries.4/@from/@alias" refs="//@entities.1/@features.6">
+      <alias name="FL"/>
+    </inclusions>
+    <inclusions refAlias="//@queries.4/@from/@alias" refs="//@entities.1/@features.6">
+      <alias name="Origin"/>
+    </inclusions>
+    <condition xsi:type="pidmLang:AndConjunction">
+     <condition xsi:type="pidmLang:AndConjunction">
+        <left xsi:type="pidmLang:MoreThanEqual" value="?1">
+          <selection refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+        </left>
+        <right xsi:type="pidmLang:Equality" value="?2">
+          <selection refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.3"/>
+        </right>
+      </condition>
+     <condition xsi:type="pidmLang:AndConjunction">
+        <left xsi:type="pidmLang:LessThanEqual" value="?1">
+          <selection refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+        </left>
+        <right xsi:type="pidmLang:Equality" value="?2">
+          <selection refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.3"/>
+        </right>
+      </condition>
+    </condition>
+    <orderingAttributes refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.2"/>
+    <orderingAttributes refAlias="//@queries.4/@from/@alias" attribute="//@entities.1/@features.2"/>
+  </queries>
+
+
+
+  <queries name="Q6_webAccessesOfGivenFlight">
+    <projections refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.0"/>
+    <projections refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.1"/>
+    <projections refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.2"/>
+    <projections refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.4"/>
+    <projections refAlias="//@queries.5/@inclusions.0/@alias" attribute="//@entities.2/@features.1"/>
+    <from entity="//@entities.1">
+    </from>
+    <inclusions refAlias="//@queries.5/@from/@alias" refs="//@entities.1/@features.5">
+      <alias name="P"/>
+    </inclusions>
+    <inclusions refAlias="//@queries.5/@from/@alias" refs="//@entities.1/@features.5">
+      <alias name="access"/>
+    </inclusions>
+    <condition xsi:type="pidmLang:Equality" value="?">
+      <selection refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.1"/>
+    </condition>
+    <orderingAttributes refAlias="//@queries.5/@from/@alias" attribute="//@entities.1/@features.2"/>
+    <orderingAttributes refAlias="//@queries.5/@inclusions.0/@alias" attribute="//@entities.2/@features.1"/>
+  </queries>
+
+
+
+  <queries name="Q7_aircraftsDepartedGivenAirport">
+    <projections refAlias="//@queries.6/@from/@alias" attribute="//@entities.0/@features.0"/>
+    <projections refAlias="//@queries.6/@from/@alias" attribute="//@entities.0/@features.1"/>
+    <projections refAlias="//@queries.6/@inclusions.0/@alias" attribute="//@entities.1/@features.0"/>
+    <projections refAlias="//@queries.6/@inclusions.0/@alias" attribute="//@entities.1/@features.1"/>
+    <projections refAlias="//@queries.6/@inclusions.0/@alias" attribute="//@entities.1/@features.2"/>
+    <projections refAlias="//@queries.6/@inclusions.2/@alias" attribute="//@entities.5/@features.1"/>
+    <projections refAlias="//@queries.6/@inclusions.1/@alias" attribute="//@entities.4/@features.0"/>
+    <projections refAlias="//@queries.6/@inclusions.1/@alias" attribute="//@entities.4/@features.1"/>
+    <from entity="//@entities.5">
+      <alias name="Aircraft"/>
+    </from>
+    <inclusions refAlias="//@queries.6/@from/@alias" refs="//@entities.5/@features.4">
+      <alias name="FL"/>
+    </inclusions>
+    <inclusions refAlias="//@queries.6/@from/@alias" refs="//@entities.5/@features.5">
+      <alias name="A"/>
+    </inclusions>
+    <condition xsi:type="pidmLang:AndConjunction">
+     <condition xsi:type="pidmLang:AndConjunction">
+        <left xsi:type="pidmLang:MoreThanEqual" value="?1">
+          <selection refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+        </left>
+        <right xsi:type="pidmLang:Equality" value="?2">
+          <selection refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.3"/>
+        </right>
+      </condition>
+     <condition xsi:type="pidmLang:AndConjunction">
+        <left xsi:type="pidmLang:LessThanEqual" value="?1">
+          <selection refAlias="//@queries.3/@from/@alias" attribute="//@entities.6/@features.1"/>
+        </left>
+        <right xsi:type="pidmLang:Equality" value="?2">
+          <selection refAlias="//@queries.3/@inclusions.0/@alias" attribute="//@entities.4/@features.3"/>
+        </right>
+      </condition>
+    </condition>
+  </queries>
+
+</pidmLang:Model>

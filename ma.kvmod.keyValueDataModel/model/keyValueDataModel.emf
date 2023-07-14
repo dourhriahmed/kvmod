@@ -1,0 +1,51 @@
+@namespace(uri="http://keyValueDataModel.kvmod.ma",
+    prefix="keyValueDataModel")
+package keyValueDataModel;
+
+class keyValueDataModel {
+  val Collection[*] collections;
+}
+
+class Collection {
+  attr String[1] name;
+}
+
+class Dataset {
+  attr String[1] name;
+  val Collection[+] collections;
+  val Property[*] properties;
+}
+
+class Property {
+  attr String[1] name;
+  val Type type;
+  ref Collection collection;
+}
+
+abstract class Type {
+}
+
+class SimpleType extends Type {
+    attr PrimitiveType[1] type;
+}
+
+
+
+
+class Field {
+  attr String[1] name;
+  val Type[1] type;
+}
+
+abstract class Key {
+  ref Property[1] property;
+}
+
+
+enum PrimitiveType {
+  INT; FLOAT;
+  TEXT;
+  DATE;
+  KEY;
+  BOOLEAN;
+}

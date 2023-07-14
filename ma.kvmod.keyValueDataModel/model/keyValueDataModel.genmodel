@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/ma.kvmod.keyValueDataModel/src"
+    modelPluginID="ma.kvmod.keyValueDataModel" modelName="keyValueDataModel"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>keyValueDataModel.ecore</foreignModel>
+  <genPackages prefix="keyValueDataModel" disposableProviderFactory="true" ecorePackage="keyValueDataModel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="keyValueDataModel.ecore#//PrimitiveType">
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/TEXT"/>
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/DATE"/>
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/KEY"/>
+      <genEnumLiterals ecoreEnumLiteral="keyValueDataModel.ecore#//PrimitiveType/BOOLEAN"/>
+    </genEnums>
+    <genClasses ecoreClass="keyValueDataModel.ecore#//DataModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//DataModel/collections"/>
+    </genClasses>
+    <genClasses ecoreClass="keyValueDataModel.ecore#//Collection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//Collection/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//Collection/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//Collection/keys"/>
+    </genClasses>
+    <genClasses ecoreClass="keyValueDataModel.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//Property/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//Property/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="keyValueDataModel.ecore#//Type"/>
+    <genClasses ecoreClass="keyValueDataModel.ecore#//SimpleType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//SimpleType/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="keyValueDataModel.ecore#//Collection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//Collection/type"/>
+    </genClasses>
+
+    <genClasses ecoreClass="keyValueDataModel.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//Field/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//Field/type"/>
+    </genClasses>
+    <genClasses ecoreClass="keyValueDataModel.ecore#//Key">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keyValueDataModel.ecore#//Key/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keyValueDataModel.ecore#//Key/position"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

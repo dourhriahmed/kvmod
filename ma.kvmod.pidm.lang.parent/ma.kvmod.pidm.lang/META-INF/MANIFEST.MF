@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ma.kvmod.pidm.lang
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: ma.kvmod.pidm.lang; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.13.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.eclipse.xtend.lib;bundle-version="2.13.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: ma.kvmod.pidm.lang.services,
+ ma.kvmod.pidm.lang,
+ ma.kvmod.pidm.lang.parser.antlr,
+ ma.kvmod.pidm.lang.scoping,
+ ma.kvmod.pidm.lang.pidmLang.util,
+ ma.kvmod.pidm.lang.parser.antlr.internal,
+ ma.kvmod.pidm.lang.validation,
+ ma.kvmod.pidm.lang.generator,
+ ma.kvmod.pidm.lang.pidmLang.impl,
+ ma.kvmod.pidm.lang.pidmLang,
+ ma.kvmod.pidm.lang.serializer
+Import-Package: org.apache.log4j

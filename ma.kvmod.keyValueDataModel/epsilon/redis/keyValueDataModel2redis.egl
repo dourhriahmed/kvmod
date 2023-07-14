@@ -1,0 +1,13 @@
+[%
+import "keyValueDataModel2redisHelpers.eol";
+
+for (C in keyValueDataModel!Collection){ %]
+  FT.CREATE [%=C.name%] ON HASH PREFIX1 [%=C.name%]:SCHEMA 
+  [% for (p in C.properties) { %]
+    [%=p.name%] [%=p.getType()%][%=p.sortable%],
+  [% } %]
+  ;
+
+[%
+}
+%]

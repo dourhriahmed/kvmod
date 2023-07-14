@@ -1,0 +1,21 @@
+operation Property getType() : String {
+  if (self.type.isTypeOf(SimpleType)) {
+    var primitiveType = self.type.type;
+    if (primitiveType.name == "FLOAT") {
+      return "REAL";
+    } 
+    if (primitiveType.name == "INT") {
+      return "INTEGER";
+    } 
+    else if (primitiveType.name == "KEY") {
+      return "KEY";
+    } else {
+      return primitiveType.name;
+    }
+  }
+}
+
+operation Collection formatKeys() : String {
+  var res = self.Keys.collect(k | k.property.name).concat(", ");
+  return res;
+}

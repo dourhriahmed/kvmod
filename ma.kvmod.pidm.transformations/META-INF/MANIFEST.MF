@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Transformations
+Bundle-SymbolicName: ma.kvmod.pidm.transformations
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.13.0",
+ org.eclipse.xtend.core;bundle-version="2.13.0",
+ ma.kvmod.pidm.lang;bundle-version="1.0.0",
+ ma.kvmod.pidm.keyValueDataModel;bundle-version="1.0.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.13.0",
+Automatic-Module-Name: ma.kvmod.pidm.transformations

@@ -1,0 +1,18 @@
+KvDesign: Automatic Generation of key value Schemas
+Copyright (C) 2022 ENSAJ School
+
+Dourhri Ahmed (dourhriahmed@gmail.com)
+
+KvDesign is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+
+KvDesign is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with KvDesign's code (LICENSE file); if not, you can get it at
+https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt

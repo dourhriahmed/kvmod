@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated KeyValueDataModel -->
+      <package
+            uri="http://ma.kvmod.keyvalueDataModel"
+            class="keyValueFamilyDataModel.KeyValueFamilyDataModelPackage"
+            genModel="model/keyValueFamilyDataModel.genmodel"/>
+   </extension>
+
+</plugin>
