@@ -92,7 +92,6 @@ INCLUDE Passenger.flights as FL,Passenger.flights.Origin as Origin,Passenger.fli
 WHERE FL.departureDate="?" and Origin.country="?"
 ORDER BY Origin.city ASC,FL.departureTime ASC
 
-
 Query Q5_passengersDepartingGivenPeriod:
 SELECT Origin.country,Origin.city,FL.departureTime,FL.code,idPassport,firstName,lastName,birthdate,sex,nationality
 FROM Passenger
@@ -118,11 +117,7 @@ SELECT AC.registrationNumber,AC.modelNumber,POS.latitude,POS.longitude,POS.dateL
 FROM Flight
 INCLUDE Flight.registeredPositions as POS,Flight.usedAirCraft as AC
 WHERE Flight.code="?"
-ORDER BY POS.dateLocaliz DESC,POS.timeLocaliz DESC
-
-
-Flights on a specific date are sorted in ascending order of flight level. Departure and 145
-arrival cities must be displayed. 
+ORDER BY POS.dateLocaliz DESC,POS.timeLocaliz DESC 
 
 Query Q9_monitoringAircraftsFlightsLevels:
 SELECT code,level,ORIGIN.city,DESTINATION.city
