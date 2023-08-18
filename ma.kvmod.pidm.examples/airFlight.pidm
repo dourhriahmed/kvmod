@@ -4,6 +4,7 @@
  /***********************/
 /* Entities definition */
 /***********************/
+
 entity Aircraft {
   id registrationNumber unique
   modelNumber text
@@ -16,9 +17,10 @@ entity Flight {
   id code unique
   departureTime time
   arrivalTime time
-  departureTime date
-  arrivalTime date
-  ref Localization[*] registeredPosition
+  departureDate date
+  arrivalDate date
+  level int
+  ref Localization[*] registeredPositions
   ref WebSiteAccess[*] sitesAccessed
   ref Passenger[*] registeredPersons
   ref Aircraft[1] usedAircraft
@@ -26,11 +28,12 @@ entity Flight {
   ref Airport[1] destination
 }
 
+
 entity Passenger {
   id idPassport unique
   firstname text
   lastname text
-  birthday date
+  birthdate date
   sex text
   nationality text
   ref Flight[*] flights
@@ -43,7 +46,6 @@ entity Airport {
   nameAirport text
   city text
   country text
-  nationality text
   ref Flight[*] landedflights
   ref Flight[*] departedflights
 }
@@ -57,10 +59,9 @@ entity Localization {
 }
 
 entity WebSiteAccess {
-  timeAccess time
-  dateAccess date
+  timeAccess datetime
   ref Flight[1] relatedFlight
-  ref Passenger[1] requests
+  ref Passenger[1] requester
 }
 
 /**********************/
@@ -85,7 +86,7 @@ INCLUDE Passenger.flights as FL
 WHERE FL.code="?"
 
 query Q4_passengersDepartingGivenCountry:
-SELECT Origin.city as originCity,Destination.city as destinationCity,FL.departureTime,idPassport,firstName,lastName,birthday,sex,nationality
+SELECT Origin.city,Destination.city,FL.departureTime,idPassport,firstName,lastName,birthdate,sex,nationality
 FROM Passenger
 INCLUDE Passenger.flights as FL,Passenger.flights.Origin as Origin,Passenger.flights.Destination as Destination
 WHERE FL.departureDate="?" and Origin.country="?"
@@ -93,10 +94,10 @@ ORDER BY Origin.city ASC,FL.departureTime ASC
 
 
 Query Q5_passengersDepartingGivenPeriod:
-SELECT Origin.country as originCountry,Origin.city as originCity,FL.code,idPassport,firstName,lastName,birthday,sex,nationality
+SELECT Origin.country,Origin.city,FL.departureTime,FL.code,idPassport,firstName,lastName,birthdate,sex,nationality
 FROM Passenger
 INCLUDE Passenger.flights as FL,Passenger.flights.Origin as Origin
-WHERE FL.departureTime>="?" and FL.departureDate>="?" and FL.departureTime<="?" and FL.departureDate<="?"
+WHERE FL.departureDate="?"
 ORDER BY Origin.country ASC,Origin.city ASC
 
 Query Q6_webAccessesOfGivenFlight:
@@ -110,14 +111,18 @@ Query Q7_aircraftsDepartedGivenAirport:
 SELECT registrationNumber,modelNumber,manufacturer,capacity,FL.departureDate,FL.departureTime
 FROM Aircraft
 INCLUDE Aircraft.supportedFlights as FL,Aircraft.supportedFlights.Origin as A
-WHERE FL.departureTime>="?" and FL.departureDate>="?" and FL.departureTime<="?" and FL.departureDate<="?" and A.codeICAO="?"
+WHERE FL.departureTime>="?" and FL.departureDate>="?" and FL.arrivalTime<="?" and FL.arrivalDate<="?" and A.codeICAO="?"
 
 Query Q8_localizationAircraft:
-SELECT AC.registrationNumber,AC.modelNumber,POS.latitude,POS.longitude,POS.timeLocaliz,POS.dateLocaliz
+SELECT AC.registrationNumber,AC.modelNumber,POS.latitude,POS.longitude,POS.dateLocaliz,POS.timeLocaliz
 FROM Flight
 INCLUDE Flight.registeredPositions as POS,Flight.usedAirCraft as AC
 WHERE Flight.code="?"
 ORDER BY POS.dateLocaliz DESC,POS.timeLocaliz DESC
+
+
+Flights on a specific date are sorted in ascending order of flight level. Departure and 145
+arrival cities must be displayed. 
 
 Query Q9_monitoringAircraftsFlightsLevels:
 SELECT code,level,ORIGIN.city,DESTINATION.city
