@@ -6,20 +6,20 @@
 /***********************/
 
 entity Aircraft {
-  id registrationNumber unique
-  modelNumber text
-  manufacturer text
-  capacity int
+  id registrationNumber unique      /*code of an aircraft*/
+  modelNumber text                  /*its model number*/
+  manufacturer text                 /*name of its manufacturer*/
+  capacity int                      /*its number of seats*/
   ref Flight[*] supportedFlights
 }
 
 entity Flight {
-  id code unique
-  departureTime time
-  arrivalTime time
-  departureDate date
-  arrivalDate date
-  level int
+  id code unique                    /*flight number*/
+  departureTime time                /*the time in format hh:mm at which a flight is scheduled to depart from a given airport of origin*/
+  departureDate date                /*its scheduled date*/
+  arrivalTime time                  /*the time in hh:mm format at which a flight must land at a given destination airport*/
+  arrivalDate date                  /*its scheduled date*/
+  level int                         /*Flight level. It is an aircraft's altitude at standard air pressure, expressed in hundreds of feet*/
   ref Localization[*] registeredPositions
   ref WebSiteAccess[*] sitesAccessed
   ref Passenger[*] registeredPersons
@@ -30,36 +30,37 @@ entity Flight {
 
 
 entity Passenger {
-  id idPassport unique
-  firstname text
-  lastname text
-  birthdate date
-  sex text
-  nationality text
+  id idPassport unique      /*Passport number of a passenger*/
+  firstname text            /*its first name*/
+  lastname text             /*its last name*/
+  birthdate date            /*its birthdate in format mm-jj-aaaa*/
+  sex text                  /*its sex: "M" for male, "F" for Female*/
+  nationality text          /*its nationality*/
   ref Flight[*] flights
   ref WebSiteAccess[*] accessedSites
 }
 
 
 entity Airport {
-  id codeICAO unique
-  nameAirport text
-  city text
-  country text
+  id codeICAO unique        /*code created by the International Civil Aviation Organization to identify the airports in the world*/
+  nameAirport text          /*name of the airport*/
+  city text                 /*city where the airport is located*/
+  country text              /*country where the airport is located*/
   ref Flight[*] landedflights
   ref Flight[*] departedflights
 }
 
 entity Localization {
-  timeLocaliz time
-  dateLocaliz date
-  latitude text
-  longitude text
+  timeLocaliz time          /*time of calculation of the position of the aircraft*/
+  dateLocaliz date          /*its date of calculation*/
+  latitude text             /*latitude of the aircraft at a given time*/
+  longitude text            /*its longitude*/
   ref Flight[1] inFlight
 }
 
 entity WebSiteAccess {
-  timeAccess datetime
+  timeAccess datetime           /*time of a passenger's access to a web site within a flight*/
+  url : string                  /*url of the web site visited*/
   ref Flight[1] relatedFlight
   ref Passenger[1] requester
 }
